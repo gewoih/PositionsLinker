@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
-namespace WindowsFormsApp1
+namespace PositionsLinker
 {
 	class SuppliersList
 	{
@@ -13,15 +13,14 @@ namespace WindowsFormsApp1
 			items = new List<Supplier>();
 		}
 
-		public void LoadSuppliers()
+		public void LoadSuppliers(SortedSet<string> sourcePositions)
 		{
 			SQL connection = new SQL();
 
 			SqlDataReader reader = connection.Execute("PositionsLinker..GetSuppliers");
 			while (reader.Read())
 			{
-				Supplier newSupplier = new Supplier(reader["egais_code"].ToString(), reader["name"].ToString());
-				newSupplier.LoadPositions();
+				Supplier newSupplier = new Supplier(reader["egais_code"].ToString(), reader["name"].ToString(), sourcePositions);
 				items.Add(newSupplier);
 
 				MainForm.form.cbSuppliers.Items.Add("[" + reader["egais_code"].ToString() + "] " + reader["name"].ToString());

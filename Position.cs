@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using Search;
 
-namespace WindowsFormsApp1
+namespace PositionsLinker
 {
 	public class Position
 	{
@@ -21,17 +21,17 @@ namespace WindowsFormsApp1
 			foundMatches = new SortedDictionary<string, double>();
 		}
 
-		public async Task FindMatches(SortedSet<string> sourcePositions)
+		public void FindMatches(SortedSet<string> sourcePositions)
 		{
-			await Task.Run(() => SearchPositions(sourcePositions));
+			SearchPositions(sourcePositions);
 		}
 
 		public void SearchPositions(SortedSet<string> sourcePositions)
 		{
 			SortedDictionary<string, double> resultsDictionary = new SortedDictionary<string, double>();
 
-			double diceMax = 0.1;
-			double lcsMax = 0.1;
+			double diceMax = 0;
+			double lcsMax = 0;
 
 			foreach (var item in sourcePositions)
 			{
